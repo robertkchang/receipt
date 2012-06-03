@@ -1,28 +1,22 @@
 require "spec_helper"
 require 'receipt'
+require 'item'
 
 describe "Receipt" do
   it "should initialize correctly with the given single input" do
     input = Array.new ["1 music CD at 14.99"]
     receipt = Receipt.new input
     receipt.shopping_list.size.should eql 1
-    receipt.shopping_list[0].class.should eql Receipt::Item
+    receipt.shopping_list[0].class.should eql Item
   end
 
   it "should initialize correctly with the given multiple inputs" do
     input = Array.new ["1 music CD at 14.99", "1 packet of headache pills at 9.75", "1 imported bottle of perfume at 47.50"]
     receipt = Receipt.new input
     receipt.shopping_list.size.should eql 3
-    receipt.shopping_list[0].class.should eql Receipt::Item
-    receipt.shopping_list[1].class.should eql Receipt::Item
-    receipt.shopping_list[2].class.should eql Receipt::Item
-  end
-
-  it "should initialize pluralized exempt list" do
-    Receipt.exempted_list.size.should eql Receipt::EXEMPTED.size * 2
-    Receipt::EXEMPTED.each { |itemName|
-      Receipt.exempted_list.include? itemName + 'S'
-    }
+    receipt.shopping_list[0].class.should eql Item
+    receipt.shopping_list[1].class.should eql Item
+    receipt.shopping_list[2].class.should eql Item
   end
 
   it "should calculate correctly with the given single input" do
@@ -63,6 +57,14 @@ describe "Receipt" do
     receipt.calculate
     receipt.receipt_total.round(2).should eql 74.68
     receipt.to_s.should eql "1 imported bottle of perfume: 32.19\r\n1 bottle of perfume: 20.89\r\n1 packet of headache pills: 9.75\r\n1 box of imported chocolates: 11.85\r\nSales taxes: 6.70\r\nTotal: 74.68"
+  end
+
+  it "should calculate correctly with the given fourth use case" do
+    input = Array.new ["1 can of soup at 0.85", "1 bowl of cereal at 10.45", "10 cases of nuts at 1.50", "20 imported bottles of shampoo at 2.50"]
+    receipt = Receipt.new input
+    receipt.calculate
+    receipt.receipt_total.round(2).should eql 86.45
+    receipt.to_s.should eql "1 can of soup: 0.95\r\n1 bowl of cereal: 11.50\r\n10 cases of nuts: 16.50\r\n20 imported bottles of shampoo: 57.50\r\nSales taxes: 10.15\r\nTotal: 86.45"
   end
 
 end
