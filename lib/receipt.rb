@@ -32,12 +32,12 @@ class Receipt
       # do set intersection to determine if item is exempted
       is_exempt = (item.description.to_s.upcase.split & Exempted.list).size > 0 ? true : false
 
-      tax_multiplier = 1 + (is_exempt ? 0 : NON_IMPORT_TAX_RATE) + (item.imported? ? IMPORT_TAX_RATE : 0)
+      tax_multiplier = 1.00 + (is_exempt ? 0.00 : NON_IMPORT_TAX_RATE) + (item.imported? ? IMPORT_TAX_RATE : 0.00)
       total_with_tax = item.qty * item.price * tax_multiplier
 
       # if there is sales tax, determine if total needs to be round to nearest 0.05
-      if tax_multiplier != 1
-        item.total_with_tax = ReceiptHelper.round_to_decimal total_with_tax, 0.05
+      if tax_multiplier != 1.00
+        item.total_with_tax = ReceiptHelper.round_to_nearest total_with_tax, 0.05
       else
         item.total_with_tax = item.price
       end
@@ -46,7 +46,7 @@ class Receipt
       @receipt_total += item.total_with_tax
     }
 
-    # do final rounding
+    # do final rounding - needed due to Float quirks
     @receipt_tax = @receipt_tax.round(2)
     @receipt_total = @receipt_total.round(2)
   end

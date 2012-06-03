@@ -9,8 +9,8 @@ class ReceiptHelper
   #          1.675 -> 1.68
   #          1.68 -> 1.68
   #
-  def self.round_to_decimal value_to_round, decimal_value_to_round_to
-    rounded_value = ((((value_to_round * 100) / 10).truncate)/10.0 + decimal_value_to_round_to).round(2)
+  def self.round_to_nearest value_to_round, decimal_value_to_round_to
+    rounded_value = (((value_to_round * 10).truncate)/10.0 + decimal_value_to_round_to).round(2)
     if value_to_round < rounded_value && (rounded_value - value_to_round).round(2) != decimal_value_to_round_to
       rounded_value
     else
