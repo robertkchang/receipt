@@ -4,13 +4,11 @@
 class Item
 
   attr_reader :price, :description, :qty
-  attr_accessor :total_with_tax
+  attr_accessor :total
 
   def imported?; !!@imported; end
 
-  #
   # Constructor
-  #
   def initialize itemStr
     if itemStr.nil? || itemStr.empty?
       raise 'Input for item is empty. Cannot create item.'
@@ -25,15 +23,13 @@ class Item
       end
 
       @imported = itemStr.to_s.scan(%r/imported/i).size > 0 ? true : false
-      @total_with_tax = 0.00
+      @total = 0.00
     end
   end
 
-  #
   # Override to return item details
-  #
   def to_s
-    @qty.to_s + " " + @description + ": " + ("%.02f" % @total_with_tax).to_s + "\r\n"
+    "#{@qty.to_s} #{@description}: #{("%.02f" % @total).to_s}\r\n"
   end
 
 end

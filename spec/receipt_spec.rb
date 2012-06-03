@@ -67,4 +67,12 @@ describe "Receipt" do
     receipt.to_s.should eql "1 can of soup: 0.95\r\n1 bowl of cereal: 11.50\r\n10 cases of nuts: 16.50\r\n20 imported bottles of shampoo: 57.50\r\nSales taxes: 10.15\r\nTotal: 86.45"
   end
 
+  it "should calculate correctly with the given fifth use case" do
+    input = Array.new ["10 chocolate bar at 0.85"]
+    receipt = Receipt.new input
+    receipt.calculate
+    receipt.receipt_total.should eql 8.50
+    receipt.to_s.should eql "10 chocolate bar: 8.50\r\nSales taxes: 0.00\r\nTotal: 8.50"
+  end
+
 end
