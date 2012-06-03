@@ -1,7 +1,6 @@
 require_relative 'item'
 require_relative 'exempted'
 require_relative 'receipt_helper'
-
 #
 # This class represents a Receipt for a shopping list
 #
@@ -17,13 +16,11 @@ class Receipt
     @shopping_list = input.inject(Array.new) { |list, itemStr| list << Item.new(itemStr)}
     @receipt_tax = 0.00
     @receipt_total = 0.00
-
   end
 
   # Calculates the receipt tax and total
   def calculate
     @shopping_list.each { |item|
-
       # do Set intersection to determine if item is exempted
       is_exempt = (item.description.to_s.upcase.split & Exempted.list).size > 0 ? true : false
 
@@ -39,13 +36,16 @@ class Receipt
     # do final rounding - needed due to Float quirks
     @receipt_tax = @receipt_tax.round(2)
     @receipt_total = @receipt_total.round(2)
+    return self
   end
+
+  # print
+  def print; puts self end
 
   # Override to return receipt items, sales taxes, and total
   def to_s
-    item_text = @shopping_list.inject('') { |result, item|
-      result += item.to_s
-    }
+    item_text = "===  Your Receipt  ===\r\n"
+    @shopping_list.each { |item| item_text += item.to_s }
     item_text +=  "Sales taxes: #{("%.02f" % @receipt_tax).to_s}\r\n"
     item_text +=  "Total: #{("%.02f" % @receipt_total).to_s}"
   end

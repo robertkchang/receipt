@@ -19,11 +19,7 @@ class Shopping
 
   begin
     receipt = Receipt.new input_list
-    receipt.calculate
-    puts '-----------------'
-    puts '  Your Receipt   '
-    puts '-----------------'
-    puts receipt
+    receipt.calculate.print
   rescue
     puts "Error: #{$!}"
   end
