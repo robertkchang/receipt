@@ -4,8 +4,8 @@ require "receipt"
 describe "Item" do
   it "should parse inputted non-exempt, non-imported item correctly" do
     item = Receipt::Item.new "1 music CD at 14.99"
-    item.exempt.should eql false
-    item.imported.should eql false
+    item.exempt?.should eql false
+    item.imported?.should eql false
     item.qty.should eql 1
     item.price.should eql 14.99
     item.description.should eql 'music CD'
@@ -13,8 +13,8 @@ describe "Item" do
 
   it "should parse inputted exempt, non-imported item correctly" do
     item = Receipt::Item.new "1 packet of headache pills at 9.75"
-    item.exempt.should eql true
-    item.imported.should eql false
+    item.exempt?.should eql true
+    item.imported?.should eql false
     item.qty.should eql 1
     item.price.should eql 9.75
     item.description.should eql 'packet of headache pills'
@@ -22,8 +22,8 @@ describe "Item" do
 
   it "should parse inputted non-exempt imported item correctly" do
     item = Receipt::Item.new "1 imported bottle of perfume at 47.50"
-    item.exempt.should eql false
-    item.imported.should eql true
+    item.exempt?.should eql false
+    item.imported?.should eql true
     item.qty.should eql 1
     item.price.should eql 47.50
     item.description.should eql 'imported bottle of perfume'
@@ -31,8 +31,8 @@ describe "Item" do
 
   it "should parse inputted exempt imported item as non-exempt" do
     item = Receipt::Item.new "1 imported packet of headache pills at 9.50"
-    item.exempt.should eql true
-    item.imported.should eql true
+    item.exempt?.should eql true
+    item.imported?.should eql true
     item.qty.should eql 1
     item.price.should eql 9.50
     item.description.should eql 'imported packet of headache pills'
@@ -40,8 +40,8 @@ describe "Item" do
 
   it "should parse inputted item case insensitive" do
     item = Receipt::Item.new "1 ImPorted packet of headache pIllS At 9.50"
-    item.exempt.should eql true
-    item.imported.should eql true
+    item.exempt?.should eql true
+    item.imported?.should eql true
     item.qty.should eql 1
     item.price.should eql 9.50
     item.description.should eql 'ImPorted packet of headache pIllS'
@@ -59,7 +59,7 @@ describe "Item" do
     begin
       item = Receipt::Item.new "a imported packet of headache pills at 9.50"
       rescue
-        $!.to_s.should eql 'Invalid input for item.  Should be: {qty} {description} at {price}'
+        $!.to_s.should eql "Invalid input for item: 'a imported packet of headache pills at 9.50'. Should be: {qty} {description} at {price}"
     end
   end
 
@@ -67,7 +67,7 @@ describe "Item" do
     begin
       item = Receipt::Item.new "imported packet of headache pills at 9.50"
     rescue
-      $!.to_s.should eql 'Invalid input for item.  Should be: {qty} {description} at {price}'
+      $!.to_s.should eql "Invalid input for item: 'imported packet of headache pills at 9.50'. Should be: {qty} {description} at {price}"
     end
   end
 
@@ -75,7 +75,7 @@ describe "Item" do
     begin
       item = Receipt::Item.new "0 imported packet of headache pills at 9.50"
     rescue
-      $!.to_s.should eql 'Invalid input for item.  Should be: {qty} {description} at {price}'
+      $!.to_s.should eql "Invalid input for item: '0 imported packet of headache pills at 9.50'. Should be: {qty} {description} at {price}"
     end
   end
 
@@ -83,7 +83,7 @@ describe "Item" do
     begin
       item = Receipt::Item.new "1 at 9.50"
     rescue
-      $!.to_s.should eql 'Invalid input for item.  Should be: {qty} {description} at {price}'
+      $!.to_s.should eql "Invalid input for item: '1 at 9.50'. Should be: {qty} {description} at {price}"
     end
   end
 
@@ -91,7 +91,7 @@ describe "Item" do
     begin
       item = Receipt::Item.new "1 9.50"
     rescue
-      $!.to_s.should eql 'Invalid input for item.  Should be: {qty} {description} at {price}'
+      $!.to_s.should eql "Invalid input for item: '1 9.50'. Should be: {qty} {description} at {price}"
     end
   end
 
@@ -99,7 +99,7 @@ describe "Item" do
     begin
       item = Receipt::Item.new "1 book 9.50"
     rescue
-      $!.to_s.should eql 'Invalid input for item.  Should be: {qty} {description} at {price}'
+      $!.to_s.should eql "Invalid input for item: '1 book 9.50'. Should be: {qty} {description} at {price}"
     end
   end
 
@@ -107,7 +107,15 @@ describe "Item" do
     begin
       item = Receipt::Item.new "1 imported packet of headache pills at"
     rescue
-      $!.to_s.should eql 'Invalid input for item.  Should be: {qty} {description} at {price}'
+      $!.to_s.should eql "Invalid input for item: '1 imported packet of headache pills at'. Should be: {qty} {description} at {price}"
+    end
+  end
+
+  it "should error if price is valid float" do
+    begin
+      item = Receipt::Item.new "1 imported packet of headache pills at abc"
+    rescue
+      $!.to_s.should eql "Invalid input for item: '1 imported packet of headache pills at abc'. Should be: {qty} {description} at {price}"
     end
   end
 
@@ -115,7 +123,7 @@ describe "Item" do
     begin
       item = Receipt::Item.new "1 imported packet of headache pills at 0"
     rescue
-      $!.to_s.should eql 'Invalid input for item.  Should be: {qty} {description} at {price}'
+      $!.to_s.should eql "Invalid input for item: '1 imported packet of headache pills at 0'. Should be: {qty} {description} at {price}"
     end
   end
 end

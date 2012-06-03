@@ -1,6 +1,7 @@
 #
+# Accepts one or more item, calculates the sales tax and total, and displays the itemized receipt
 #
-require './receipt'
+require_relative 'receipt'
 
 class Shopping
 
@@ -11,17 +12,19 @@ class Shopping
   input_list = Array.new
 
   begin
-
-    puts 'Enter an item:'
+    puts 'Enter an item (<ENTER> on empty line to quit):'
     input = gets.chomp
     input_list << input unless input.to_s.empty?
-
   end until input.to_s.empty?
 
-  receipt = Receipt.new input_list
-  receipt.calculate
-  puts '-----------------'
-  puts '  Your Receipt   '
-  puts '-----------------'
-  puts receipt
+  begin
+    receipt = Receipt.new input_list
+    receipt.calculate
+    puts '-----------------'
+    puts '  Your Receipt   '
+    puts '-----------------'
+    puts receipt
+  rescue
+    puts "Error: #{$!}"
+  end
 end
