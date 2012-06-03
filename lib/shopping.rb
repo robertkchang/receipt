@@ -20,6 +20,8 @@ class Shopping
 
   receipt = Receipt.new input_list
   receipt.calculate
-  print receipt.to_s
-
+  puts '-----------------'
+  puts '  Your Receipt   '
+  puts '-----------------'
+  puts receipt
 end

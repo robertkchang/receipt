@@ -3,17 +3,17 @@ class Receipt
   NON_IMPORT_TAX_RATE = 0.1
   IMPORT_TAX_RATE = 0.05
 
-  EXEMPTED = %w(BOOKS CHOCOLATE PILLS)
+  EXEMPTED = %w(BOOK BOOKS CHOCOLATE CHOCOLATES PILL PILLS)
 
-  attr_reader :shopping_list
-  attr_reader :receipt_total
+  attr_reader :shopping_list, :receipt_tax, :receipt_total
 
   #
   #
   #
   def initialize input
     @shopping_list = input.inject(Array.new) { |list, itemStr| list << Item.new(itemStr)}
-    @receipt_total = 0.0
+    @receipt_tax = 0.00
+    @receipt_total = 0.00
   end
 
   #
@@ -22,10 +22,29 @@ class Receipt
   def calculate
     @shopping_list.each { |item|
       tax_multiplier = 1 + (item.exempt ? 0 : NON_IMPORT_TAX_RATE) + (item.imported ? IMPORT_TAX_RATE : 0)
-      unadjusted_total_with_tax = item.price * tax_multiplier
-      item.total_with_tax = tax_multiplier != 1 ? unadjusted_total_with_tax.round(1) + 0.05 : item.price
+      total_with_tax = (item.price * tax_multiplier).round(2)
+
+      if tax_multiplier != 1
+        item.total_with_tax = round total_with_tax
+      else
+        item.total_with_tax = item.price
+      end
+
+      @receipt_tax += item.total_with_tax - item.price
       @receipt_total += item.total_with_tax
     }
+  end
+
+  #
+  #
+  #
+  def round value
+    nearest_five_cents = ((((value * 100) / 10).truncate)/10.0 + 0.05).round(2)
+    if value < nearest_five_cents && (nearest_five_cents - value).round(2) != 0.05
+      nearest_five_cents
+    else
+      value
+    end
   end
 
   #
@@ -35,7 +54,8 @@ class Receipt
     item_text = @shopping_list.inject('') { |result, item|
       result += item.to_s
     }
-    item_text +=  'Total: ' + @receipt_total.to_s
+    item_text +=  "Sales taxes: " + ("%.02f" % @receipt_tax.round(2)).to_s + "\r\n"
+    item_text +=  "Total: " + ("%.02f" % @receipt_total).to_s
   end
 
   private
@@ -69,7 +89,7 @@ class Receipt
     end
 
     def to_s
-      @qty.to_s + ' ' + @description + ': ' + @total_with_tax.to_s + '\r'
+      @qty.to_s + " " + @description + ": " + ("%.02f" % @total_with_tax).to_s + "\r\n"
     end
 
   end
