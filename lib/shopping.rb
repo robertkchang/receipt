@@ -9,7 +9,7 @@ class Shopping
   # Main #
   ########
 
-  input_list = Array.new
+  input_list = []
 
   begin
     puts 'Enter an item (<ENTER> on empty line to quit):'
