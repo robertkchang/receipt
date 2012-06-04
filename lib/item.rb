@@ -1,4 +1,4 @@
-require_relative 'receipt_helper'
+require_relative 'exempted'
 #
 # This class represents an Item in a Receipt
 #
@@ -25,7 +25,7 @@ class Item
       end
 
       @imported = itemStr.to_s.scan(%r/imported/i).size > 0 ? true : false
-      @exempt = ReceiptHelper.check_exemption(@description)
+      @exempt = Exempted.exempt? @description
       @total = 0.00
     end
   end

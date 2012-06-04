@@ -1,5 +1,3 @@
-require_relative 'item'
-require_relative 'exempted'
 #
 # Helper class for Receipt calculation
 #
@@ -19,12 +17,4 @@ class ReceiptHelper
   def self.round_to_nearest value_to_round
     (value_to_round * 20.0).ceil / 20.0
   end
-
-  #
-  # do Set intersection to determine if description contains a name that is exempted
-  #
-  def self.check_exemption description
-    (description.to_s.upcase.split & Exempted.list).size > 0 ? true : false
-  end
-
 end

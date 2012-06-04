@@ -13,4 +13,11 @@ class Exempted
   def self.list
     return @@pluralized_exempted_list
   end
+
+  #
+  # do Set intersection to determine if description contains a name that is exempted
+  #
+  def self.exempt? description
+    (description.to_s.upcase.split & Exempted.list).size > 0 ? true : false
+  end
 end
