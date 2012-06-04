@@ -1,4 +1,4 @@
-require_relative 'exempted'
+require_relative 'constants'
 #
 # This class represents an Item in a Receipt
 #
@@ -25,14 +25,28 @@ class Item
       end
 
       @imported = itemStr.to_s.scan(%r/imported/i).size > 0 ? true : false
-      @exempt = Exempted.exempt? @description
+      @exempt = check_for_exempt @description
       @total = 0.00
     end
   end
 
   # Override to return item details
   def to_s
-    "#{@qty.to_s} #{@description}: #{("%.02f" % @total).to_s}#{$CR_LF}"
+    "#{@qty.to_s} #{@description}: #{("%.02f" % @total).to_s}#{Constants::CR_LF}"
   end
 
+  private
+
+  #
+  # determine if description contains one of the EXEMPTED
+  #
+  def check_for_exempt description
+    # remove S if pluralized
+    desc_arr = description.to_s.upcase.split.inject(Array.new) { |list, token|
+      token.end_with?('S') ? list << token.chop : list << token
+    }
+
+    # do Set intersection
+    (desc_arr & Constants::EXEMPTED).size > 0 ? true : false
+  end
 end
