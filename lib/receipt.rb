@@ -20,13 +20,12 @@ class Receipt
   # Calculates the receipt tax and total
   def calculate
     @shopping_list.each { |item|
-      tax_multiplier = 1.00 + (item.exempt? ? 0.00 : NON_IMPORT_TAX_RATE) + (item.imported? ? IMPORT_TAX_RATE : 0.00)
+      tax_rate = (item.exempt? ? 0.00 : NON_IMPORT_TAX_RATE) + (item.imported? ? IMPORT_TAX_RATE : 0.00)
       total_before_tax = item.qty * item.price
-      total_with_tax = total_before_tax * tax_multiplier
+      tax = ReceiptHelper.round_to_nearest (total_before_tax * tax_rate)
 
-      # if there is sales tax, round to nearest 0.05
-      @receipt_total += item.total = total_before_tax != total_with_tax ? ReceiptHelper.round_to_nearest(total_with_tax, 0.05) : total_before_tax
-      @receipt_tax += item.total - total_before_tax
+      @receipt_tax += tax
+      @receipt_total += item.total = total_before_tax + tax
     }
 
     # do final rounding - needed due to Float quirks

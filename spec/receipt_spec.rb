@@ -63,8 +63,8 @@ describe "Receipt" do
     input = Array.new ["1 can of soup at 0.85", "1 bowl of cereal at 10.45", "10 cases of nuts at 1.50", "20 imported bottles of shampoo at 2.50"]
     receipt = Receipt.new input
     receipt.calculate
-    receipt.receipt_total.should eql 86.45
-    receipt.to_s.should eql "===  Your Receipt  ===\r\n1 can of soup: 0.95\r\n1 bowl of cereal: 11.50\r\n10 cases of nuts: 16.50\r\n20 imported bottles of shampoo: 57.50\r\nSales taxes: 10.15\r\nTotal: 86.45"
+    receipt.receipt_total.should eql 86.50
+    receipt.to_s.should eql "===  Your Receipt  ===\r\n1 can of soup: 0.95\r\n1 bowl of cereal: 11.50\r\n10 cases of nuts: 16.50\r\n20 imported bottles of shampoo: 57.55\r\nSales taxes: 10.20\r\nTotal: 86.50"
   end
 
   it "should calculate correctly with the given fifth use case" do

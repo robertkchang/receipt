@@ -4,64 +4,39 @@ require "receipt_helper"
 
 describe "Helper" do
   describe "Round" do
-    it "should round correctly if value_to_round is 1.6 and decimal_to_round_to is 0.05" do
-      rounded = ReceiptHelper.round_to_nearest 1.6, 0.05
-      rounded.should eql 1.60
+    it "should round correctly if value_to_round is 0.6" do
+      rounded = ReceiptHelper.round_to_nearest 0.6
+      rounded.should eql 0.6
     end
 
-    it "should round correctly if value_to_round is 1.625 and decimal_to_round_to is 0.05" do
-      rounded = ReceiptHelper.round_to_nearest 1.625, 0.05
-      rounded.should eql 1.65
+    it "should round correctly if value_to_round is 0.625" do
+      rounded = ReceiptHelper.round_to_nearest 0.625
+      rounded.should eql 0.65
     end
 
-    it "should round correctly if value_to_round is 1.63 and decimal_to_round_to is 0.05" do
-      rounded = ReceiptHelper.round_to_nearest 1.63, 0.05
-      rounded.should eql 1.65
+    it "should round correctly if value_to_round is 0.63" do
+      rounded = ReceiptHelper.round_to_nearest 0.63
+      rounded.should eql 0.65
     end
 
-    it "should round correctly if value_to_round is 1.65 and decimal_to_round_to is 0.05" do
-      rounded = ReceiptHelper.round_to_nearest 1.65, 0.05
-      rounded.should eql 1.65
+    it "should round correctly if value_to_round is 0.65" do
+      rounded = ReceiptHelper.round_to_nearest 0.65
+      rounded.should eql 0.65
     end
 
-    it "should round correctly if value_to_round is 1.675 and decimal_to_round_to is 0.05" do
-      rounded = ReceiptHelper.round_to_nearest 1.675, 0.05
-      rounded.should eql 1.68
+    it "should round correctly if value_to_round is 0.675" do
+      rounded = ReceiptHelper.round_to_nearest 0.675
+      rounded.should eql 0.7
     end
 
-    it "should round correctly if value_to_round is 1.68 and decimal_to_round_to is 0.05" do
-      rounded = ReceiptHelper.round_to_nearest 1.68, 0.05
-      rounded.should eql 1.68
+    it "should round correctly if value_to_round is 0.68" do
+      rounded = ReceiptHelper.round_to_nearest 0.68
+      rounded.should eql 0.7
     end
 
-    it "should round correctly if value_to_round is 1.6 and decimal_to_round_to is 0.1" do
-      rounded = ReceiptHelper.round_to_nearest 1.6, 0.1
-      rounded.should eql 1.6
-    end
-
-    it "should round correctly if value_to_round is 1.625 and decimal_to_round_to is 0.1" do
-      rounded = ReceiptHelper.round_to_nearest 1.625, 0.1
-      rounded.should eql 1.7
-    end
-
-    it "should round correctly if value_to_round is 1.63 and decimal_to_round_to is 0.1" do
-      rounded = ReceiptHelper.round_to_nearest 1.63, 0.1
-      rounded.should eql 1.7
-    end
-
-    it "should round correctly if value_to_round is 1.65 and decimal_to_round_to is 0.1" do
-      rounded = ReceiptHelper.round_to_nearest 1.65, 0.1
-      rounded.should eql 1.7
-    end
-
-    it "should round correctly if value_to_round is 1.675 and decimal_to_round_to is 0.1" do
-      rounded = ReceiptHelper.round_to_nearest 1.675, 0.1
-      rounded.should eql 1.7
-    end
-
-    it "should round correctly if value_to_round is 1.68 and decimal_to_round_to is 0.1" do
-      rounded = ReceiptHelper.round_to_nearest 1.68, 0.1
-      rounded.should eql 1.7
+    it "should round correctly if value_to_round is 0.76" do
+      rounded = ReceiptHelper.round_to_nearest 0.76
+      rounded.should eql 0.8
     end
   end
 
