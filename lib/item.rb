@@ -1,3 +1,4 @@
+require_relative 'receipt_helper'
 #
 # This class represents an Item in a Receipt
 #
@@ -7,6 +8,7 @@ class Item
   attr_accessor :total
 
   def imported?; !!@imported; end
+  def exempt?; !!@exempt; end
 
   # Constructor
   def initialize itemStr
@@ -23,6 +25,7 @@ class Item
       end
 
       @imported = itemStr.to_s.scan(%r/imported/i).size > 0 ? true : false
+      @exempt = ReceiptHelper.check_exemption(self)
       @total = 0.00
     end
   end

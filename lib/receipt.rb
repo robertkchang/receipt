@@ -1,5 +1,4 @@
 require_relative 'item'
-require_relative 'exempted'
 require_relative 'receipt_helper'
 #
 # This class represents a Receipt for a shopping list
@@ -21,10 +20,7 @@ class Receipt
   # Calculates the receipt tax and total
   def calculate
     @shopping_list.each { |item|
-      # do Set intersection to determine if item is exempted
-      is_exempt = (item.description.to_s.upcase.split & Exempted.list).size > 0 ? true : false
-
-      tax_multiplier = 1.00 + (is_exempt ? 0.00 : NON_IMPORT_TAX_RATE) + (item.imported? ? IMPORT_TAX_RATE : 0.00)
+      tax_multiplier = 1.00 + (item.exempt? ? 0.00 : NON_IMPORT_TAX_RATE) + (item.imported? ? IMPORT_TAX_RATE : 0.00)
       total_before_tax = item.qty * item.price
       total_with_tax = total_before_tax * tax_multiplier
 

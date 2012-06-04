@@ -1,5 +1,9 @@
+require_relative 'item'
+require_relative 'exempted'
+#
+# Helper class for Receipt calculation
+#
 class ReceiptHelper
-
   #
   # Rounds value up to nearest decimal value given. Never rounds down. Always round to 2 decimal places
   # Example: if value_to_round = 1.625 and decimal_value_to_round_to to is 0.05
@@ -16,6 +20,13 @@ class ReceiptHelper
     else
       value_to_round.round(2)
     end
+  end
+
+  #
+  # do Set intersection to determine if item is exempted
+  #
+  def self.check_exemption item
+    (item.description.to_s.upcase.split & Exempted.list).size > 0 ? true : false
   end
 
 end

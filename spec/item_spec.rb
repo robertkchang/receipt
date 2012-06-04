@@ -4,6 +4,7 @@ require "item"
 describe "Item" do
   it "should parse inputted non-exempt, non-imported item correctly" do
     item = Item.new "1 music CD at 14.99"
+    item.exempt?.should eql false
     item.imported?.should eql false
     item.qty.should eql 1
     item.price.should eql 14.99
@@ -12,6 +13,7 @@ describe "Item" do
 
   it "should parse inputted exempt, non-imported item correctly" do
     item = Item.new "1 packet of headache pills at 9.75"
+    item.exempt?.should eql true
     item.imported?.should eql false
     item.qty.should eql 1
     item.price.should eql 9.75
@@ -20,6 +22,7 @@ describe "Item" do
 
   it "should parse inputted non-exempt imported item correctly" do
     item = Item.new "1 imported bottle of perfume at 47.50"
+    item.exempt?.should eql false
     item.imported?.should eql true
     item.qty.should eql 1
     item.price.should eql 47.50
@@ -28,6 +31,7 @@ describe "Item" do
 
   it "should parse inputted exempt imported item as non-exempt" do
     item = Item.new "1 imported packet of headache pills at 9.50"
+    item.exempt?.should eql true
     item.imported?.should eql true
     item.qty.should eql 1
     item.price.should eql 9.50
@@ -36,6 +40,7 @@ describe "Item" do
 
   it "should parse inputted item case insensitive" do
     item = Item.new "1 ImPorted packet of headache pIllS At 9.50"
+    item.exempt?.should eql true
     item.imported?.should eql true
     item.qty.should eql 1
     item.price.should eql 9.50

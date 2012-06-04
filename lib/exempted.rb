@@ -1,5 +1,5 @@
 #
-# This class is a singleton class that returns a list of exempted items
+# This class is a singleton that returns a list of exempted items and their pluralized form
 #
 class Exempted
 
