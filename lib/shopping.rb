@@ -1,8 +1,7 @@
+require_relative 'receipt'
 #
 # Accepts one or more item, calculates the sales tax and total, and displays the itemized receipt
 #
-require_relative 'receipt'
-
 class Shopping
 
   ########
