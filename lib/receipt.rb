@@ -5,7 +5,6 @@ require_relative 'custom_float'
 # This class represents a Receipt for a shopping list
 #
 class Receipt
-
   attr_reader :shopping_list, :receipt_tax, :receipt_total
 
   # Constructor

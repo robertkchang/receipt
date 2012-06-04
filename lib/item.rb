@@ -3,7 +3,6 @@ require_relative 'constants'
 # This class represents an Item in a Receipt
 #
 class Item
-
   attr_reader :price, :description, :qty
   attr_accessor :total
 

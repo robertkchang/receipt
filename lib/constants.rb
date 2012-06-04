@@ -1,3 +1,6 @@
+#
+# Class containing constants used by this program
+#
 class Constants
 
   CR_LF = "\r\n"
