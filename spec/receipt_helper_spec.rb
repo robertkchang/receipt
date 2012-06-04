@@ -43,32 +43,27 @@ describe "Helper" do
   describe "Exempt" do
     it "should, given BOOK to be an existing item name in Exempted::EXEMPTED, validate an item with description containing 'Book' is exempted" do
       Exempted::EXEMPTED.include?('BOOK').should eql true
-      item = Item.new "1 book at 9.99"
-      ReceiptHelper.check_exemption(item).should eql true
+      ReceiptHelper.check_exemption('book').should eql true
     end
 
     it "should, given BOOK to be an existing item name in Exempted::EXEMPTED, validate an item with description containing 'Books' is exempted" do
       Exempted::EXEMPTED.include?('BOOK').should eql true
-      item = Item.new "2 books at 9.99"
-      ReceiptHelper.check_exemption(item).should eql true
+      ReceiptHelper.check_exemption('books').should eql true
     end
 
     it "should, given BOOK to be an existing item name in Exempted::EXEMPTED, validate an item with description containing 'BoOK' is exempted" do
       Exempted::EXEMPTED.include?('BOOK').should eql true
-      item = Item.new "1 BoOK at 9.99"
-      ReceiptHelper.check_exemption(item).should eql true
+      ReceiptHelper.check_exemption('BoOK').should eql true
     end
 
     it "should, given PENCIL is NOT an existing item name in Exempted::EXEMPTED, validate an item with description containing 'Pencil' is NOT exempted" do
       Exempted::EXEMPTED.include?('PENCIL').should eql false
-      item = Item.new "1 pencil at 2.50"
-      ReceiptHelper.check_exemption(item).should eql false
+      ReceiptHelper.check_exemption('pencil').should eql false
     end
 
     it "should, given PENCIL is NOT an existing item name in Exempted::EXEMPTED, validate an item with description containing 'Pencils' is NOT exempted" do
       Exempted::EXEMPTED.include?('PENCIL').should eql false
-      item = Item.new "2 pencils at 2.50"
-      ReceiptHelper.check_exemption(item).should eql false
+      ReceiptHelper.check_exemption('pencils').should eql false
     end
   end
 end

@@ -25,7 +25,7 @@ class Item
       end
 
       @imported = itemStr.to_s.scan(%r/imported/i).size > 0 ? true : false
-      @exempt = ReceiptHelper.check_exemption(self)
+      @exempt = ReceiptHelper.check_exemption(@description)
       @total = 0.00
     end
   end

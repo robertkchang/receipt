@@ -4,7 +4,7 @@ require_relative 'exempted'
 # Helper class for Receipt calculation
 #
 class ReceiptHelper
-  
+
   CR_LF = "\r\n"
 
   #
@@ -21,10 +21,10 @@ class ReceiptHelper
   end
 
   #
-  # do Set intersection to determine if item is exempted
+  # do Set intersection to determine if description contains a name that is exempted
   #
-  def self.check_exemption item
-    (item.description.to_s.upcase.split & Exempted.list).size > 0 ? true : false
+  def self.check_exemption description
+    (description.to_s.upcase.split & Exempted.list).size > 0 ? true : false
   end
 
 end
