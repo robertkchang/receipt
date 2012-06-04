@@ -39,9 +39,9 @@ class Receipt
 
   # Override to return receipt items, sales taxes, and total
   def to_s
-    item_text = "===  Your Receipt  ===\r\n"
+    item_text = "===  Your Receipt  ===#{ReceiptHelper::CR_LF}"
     @shopping_list.each { |item| item_text += item.to_s }
-    item_text +=  "Sales taxes: #{("%.02f" % @receipt_tax).to_s}\r\n"
+    item_text +=  "Sales taxes: #{("%.02f" % @receipt_tax).to_s}#{ReceiptHelper::CR_LF}"
     item_text +=  "Total: #{("%.02f" % @receipt_total).to_s}"
   end
 end

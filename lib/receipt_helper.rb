@@ -4,6 +4,9 @@ require_relative 'exempted'
 # Helper class for Receipt calculation
 #
 class ReceiptHelper
+  
+  CR_LF = "\r\n"
+
   #
   # Rounds value up to nearest 0.05
   #          0.6 -> 0.6

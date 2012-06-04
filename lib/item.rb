@@ -32,7 +32,7 @@ class Item
 
   # Override to return item details
   def to_s
-    "#{@qty.to_s} #{@description}: #{("%.02f" % @total).to_s}\r\n"
+    "#{@qty.to_s} #{@description}: #{("%.02f" % @total).to_s}#{ReceiptHelper::CR_LF}"
   end
 
 end
