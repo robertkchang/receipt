@@ -4,7 +4,7 @@ require "custom_float"
 
 describe "Round" do
   it "should round correctly if value_to_round is 0.6" do
-    rounded = (0.6).round_to_nearest_point_05
+    rounded = 0.6.round_to_nearest_point_05
     rounded.should eql 0.6
   end
 

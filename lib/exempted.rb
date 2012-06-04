@@ -5,19 +5,16 @@ class Exempted
 
   EXEMPTED = %w(BOOK CHOCOLATE PILL)
 
-  @@pluralized_exempted_list = EXEMPTED.inject(Array.new) { |list, itemName|
-    list << itemName
-    list << itemName + 'S'
-  }
-
-  def self.list
-    return @@pluralized_exempted_list
-  end
-
   #
-  # do Set intersection to determine if description contains a name that is exempted
+  # determine if description contains one of the EXEMPTED
   #
   def self.exempt? description
-    (description.to_s.upcase.split & Exempted.list).size > 0 ? true : false
+    # remove S if pluralized
+    desc_arr = description.to_s.upcase.split.inject(Array.new) { |list, token|
+      token.end_with?('S') ? list << token.chop : list << token
+    }
+
+    # do Set intersection
+    (desc_arr & EXEMPTED).size > 0 ? true : false
   end
 end
