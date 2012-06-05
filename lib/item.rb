@@ -25,7 +25,7 @@ class Item
 
       @total = 0.00
       @imported = itemStr.to_s.scan(%r/imported/i).size > 0 ? true : false
-      @exempt = Constants::EXEMPTED.include? description.to_s.upcase.gsub(%r/IMPORTED/, '').strip.squeeze(' ')
+      @exempt = Constants::EXEMPTED.include? @description.to_s.upcase.gsub(%r/IMPORTED/, '').strip.squeeze(' ')
     end
   end
 
