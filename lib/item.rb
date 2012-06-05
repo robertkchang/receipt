@@ -23,29 +23,14 @@ class Item
         raise "Invalid input for item: '#{itemStr}'. Should be: {qty} {description} at {price}"
       end
 
-      @imported = itemStr.to_s.scan(%r/imported/i).size > 0 ? true : false
-      @exempt = check_for_exempt @description
       @total = 0.00
+      @imported = itemStr.to_s.scan(%r/imported/i).size > 0 ? true : false
+      @exempt = Constants::EXEMPTED.include? description.to_s.upcase.gsub(%r/IMPORTED/, '').strip.squeeze(' ')
     end
   end
 
   # Override to return item details
   def to_s
     "#{@qty.to_s} #{@description}: #{("%.02f" % @total).to_s}#{Constants::CR_LF}"
-  end
-
-  private
-
-  #
-  # determine if description contains one of the EXEMPTED
-  #
-  def check_for_exempt description
-    # remove S if pluralized
-    desc_arr = description.to_s.upcase.split.inject(Array.new) { |list, token|
-      token.end_with?('S') ? list << token.chop : list << token
-    }
-
-    # do Set intersection
-    (desc_arr & Constants::EXEMPTED).size > 0 ? true : false
   end
 end
