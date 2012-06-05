@@ -19,7 +19,7 @@ class Receipt
     @shopping_list.each { |item|
       tax_rate = (item.exempt? ? 0.00 : Constants::NON_IMPORT_TAX_RATE) + (item.imported? ? Constants::IMPORT_TAX_RATE : 0.00)
       total_before_tax = item.qty * item.price
-      tax = (total_before_tax * tax_rate).round_to_nearest_point_05
+      tax = (total_before_tax * tax_rate).round_to_05
 
       @receipt_tax += tax
       @receipt_total += item.total = total_before_tax + tax

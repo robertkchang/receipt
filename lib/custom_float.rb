@@ -8,7 +8,7 @@ class Float
     #          0.675 -> 0.7
     #          0.68 -> 0.7
     #
-    def round_to_nearest_point_05
+    def round_to_05
       (self * 20.0).ceil / 20.0
     end
 end
