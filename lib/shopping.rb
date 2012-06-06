@@ -1,4 +1,5 @@
 require_relative 'receipt'
+require_relative 'shopping_cart'
 #
 # Interactively accepts one or more item,
 #    calculates the sales tax and total,
@@ -19,8 +20,7 @@ class Shopping
   end until input.to_s.empty?
 
   begin
-    receipt = Receipt.new input_list
-    receipt.calculate.print
+    (Receipt.new ShoppingCart.new input_list).calculate.print
   rescue
     puts "Error: #{$!}"
   end
